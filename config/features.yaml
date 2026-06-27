@@ -1,0 +1,110 @@
+# Feature engineering configuration
+
+# Core required skills extracted from JD
+jd_core_skills:
+  must_have:
+    - "embeddings"
+    - "sentence-transformers"
+    - "vector database"
+    - "FAISS"
+    - "Pinecone"
+    - "Weaviate"
+    - "Qdrant"
+    - "Milvus"
+    - "OpenSearch"
+    - "Elasticsearch"
+    - "retrieval"
+    - "ranking"
+    - "search systems"
+    - "recommendation systems"
+    - "NLP"
+    - "information retrieval"
+    - "Python"
+    - "NDCG"
+    - "MRR"
+    - "MAP"
+    - "A/B testing"
+    - "evaluation frameworks"
+
+  preferred:
+    - "LLM fine-tuning"
+    - "LoRA"
+    - "QLoRA"
+    - "PEFT"
+    - "learning-to-rank"
+    - "XGBoost"
+    - "LightGBM"
+    - "distributed systems"
+    - "large-scale inference"
+    - "open-source"
+    - "RAG"
+    - "hybrid search"
+    - "BM25"
+
+  related:
+    - "machine learning"
+    - "deep learning"
+    - "PyTorch"
+    - "TensorFlow"
+    - "transformers"
+    - "Hugging Face"
+    - "MLOps"
+    - "model serving"
+    - "data pipelines"
+    - "Spark"
+    - "Airflow"
+    - "Docker"
+    - "Kubernetes"
+    - "AWS"
+    - "GCP"
+    - "Azure"
+
+# Relevant titles indicating good career fit
+relevant_titles:
+  high_relevance:
+    - "AI Engineer"
+    - "ML Engineer"
+    - "Machine Learning Engineer"
+    - "Senior AI Engineer"
+    - "Senior ML Engineer"
+    - "Senior Machine Learning Engineer"
+    - "Staff ML Engineer"
+    - "Applied Scientist"
+    - "Research Engineer"
+    - "Search Engineer"
+    - "Ranking Engineer"
+    - "Recommendation Engineer"
+    - "NLP Engineer"
+    - "Data Scientist"
+
+  medium_relevance:
+    - "Software Engineer"
+    - "Senior Software Engineer"
+    - "Backend Engineer"
+    - "Platform Engineer"
+    - "Data Engineer"
+    - "Full Stack Engineer"
+    - "Tech Lead"
+
+  low_relevance:
+    - "Junior ML Engineer"
+    - "Junior Software Engineer"
+    - "Intern"
+    - "Associate"
+
+# Relevant industries
+relevant_industries:
+  high:
+    - "AI/ML"
+    - "Technology"
+    - "Software"
+    - "Internet"
+    - "SaaS"
+  medium:
+    - "FinTech"
+    - "E-commerce"
+    - "Data Analytics"
+    - "Cloud Computing"
+  low:
+    - "IT Services"
+    - "Consulting"

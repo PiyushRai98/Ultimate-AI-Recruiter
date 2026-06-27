@@ -1,0 +1,52 @@
+# Ranking engine configuration
+
+retrieval:
+  # Top-K from initial retrieval stage (expanded for better recall)
+  top_k_retrieval: 1000
+  # BM25 candidates to consider
+  bm25_top_k: 2000
+  # Dense candidates to consider
+  dense_top_k: 1500
+  # RRF constant (controls rank impact)
+  rrf_k: 60
+  # BM25 weight in RRF fusion
+  bm25_weight: 0.4
+  # Dense embedding weight in RRF fusion
+  dense_weight: 0.6
+
+embedding:
+  model_name: "all-MiniLM-L6-v2"
+  batch_size: 256
+  max_seq_length: 256
+  normalize: true
+
+ranking:
+  # Final top-K to rank with full feature pipeline
+  top_k_rerank: 200
+  # Output size
+  output_top_k: 100
+
+# Negative signals from JD analysis
+negative_signals:
+  consulting_only_companies:
+    - "TCS"
+    - "Infosys"
+    - "Wipro"
+    - "Accenture"
+    - "Cognizant"
+    - "Capgemini"
+    - "HCL"
+    - "Tech Mahindra"
+  non_relevant_domains:
+    - "computer vision"
+    - "speech"
+    - "robotics"
+    - "mechanical engineering"
+    - "civil engineering"
+    - "accounting"
+    - "marketing"
+    - "HR"
+    - "sales"
+  title_hop_threshold_months: 18
+  max_notice_period_preferred_days: 30
+  max_notice_period_acceptable_days: 90

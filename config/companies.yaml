@@ -1,0 +1,125 @@
+# Company classification and intelligence configuration
+
+# Known product companies (bonus for product experience)
+product_companies:
+  tier_1:  # Top tech / FAANG-level
+    - Google
+    - Meta
+    - Apple
+    - Amazon
+    - Microsoft
+    - Netflix
+    - OpenAI
+    - DeepMind
+    - Anthropic
+  tier_2:  # Strong product companies
+    - Flipkart
+    - Razorpay
+    - Paytm
+    - PhonePe
+    - Zomato
+    - Swiggy
+    - Dream11
+    - Meesho
+    - CRED
+    - Zerodha
+    - Ola
+    - Nykaa
+    - Freshworks
+    - Zoho
+    - Salesforce
+    - LinkedIn
+    - Uber
+    - Airbnb
+    - Stripe
+    - Spotify
+    - Twitter
+    - Pinterest
+    - Snap
+    - Slack
+    - Figma
+    - Notion
+    - Atlassian
+    - Shopify
+    - Datadog
+  tier_3:  # Good product companies / AI startups
+    - Yellow.ai
+    - Sarvam AI
+    - Mad Street Den
+    - Niramai
+    - Rephrase.ai
+    - Haptik
+    - Vernacular.ai
+    - Observe.AI
+    - Unacademy
+    - Byju's
+    - upGrad
+    - Postman
+    - Hasura
+    - Gupshup
+    - MoEngage
+    - CleverTap
+    - InMobi
+    - Glance
+    - ShareChat
+    - Lenskart
+    - UrbanCompany
+
+# IT Services / Consulting companies (penalty signal from JD)
+consulting_companies:
+  - TCS
+  - Infosys
+  - Wipro
+  - Accenture
+  - Cognizant
+  - Capgemini
+  - HCL
+  - Tech Mahindra
+  - Mindtree
+  - Mphasis
+  - LTIMindtree
+  - Hexaware
+  - Persistent
+  - Zensar
+  - NIIT Technologies
+  - L&T Infotech
+  - Birlasoft
+
+# Research organizations
+research_companies:
+  - ISRO
+  - DRDO
+  - BARC
+  - IISc
+  - IIIT
+
+# Company size to type heuristics
+size_type_mapping:
+  "1-10": "startup"
+  "11-50": "startup"
+  "51-200": "startup_or_product"
+  "201-500": "product_or_enterprise"
+  "501-1000": "product_or_enterprise"
+  "1001-5000": "enterprise"
+  "5001-10000": "large_enterprise"
+  "10001+": "large_enterprise_or_services"
+
+# Industry signals
+product_industries:
+  - AI/ML
+  - Technology
+  - Software
+  - Internet
+  - SaaS
+  - FinTech
+  - E-commerce
+  - EdTech
+  - HealthTech
+  - Gaming
+
+services_industries:
+  - IT Services
+  - Consulting
+  - Outsourcing
+  - BPO
+  - Staffing

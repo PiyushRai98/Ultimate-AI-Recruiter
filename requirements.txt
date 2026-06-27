@@ -1,0 +1,37 @@
+# Core
+polars==1.4.1
+numpy==1.26.4
+orjson==3.10.3
+pyyaml==6.0.1
+
+# NLP & Embeddings
+sentence-transformers==3.0.1
+spacy==3.7.5
+rapidfuzz==3.9.3
+
+# Vector Search
+faiss-cpu==1.8.0
+
+# ML Ranking
+lightgbm==4.4.0
+xgboost==2.0.3
+scikit-learn==1.5.0
+
+# CLI & Display
+typer==0.12.3
+rich==13.7.1
+loguru==0.7.2
+
+# Dashboard
+streamlit==1.36.0
+
+# Document parsing
+python-docx==1.1.2
+
+# Testing
+pytest==8.2.2
+
+# Code quality
+black==24.4.2
+ruff==0.4.8
+mypy==1.10.0

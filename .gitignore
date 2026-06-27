@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Artifacts & Cache
+artifacts/
+cache/
+logs/
+*.npy
+*.bin
+
+# Data (too large for git)
+data/raw/candidates.jsonl
+data/raw/candidates.jsonl.gz
+
+# Output
+submission.csv
+
+# OS
+.DS_Store
+Thumbs.db

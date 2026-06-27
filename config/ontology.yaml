@@ -1,0 +1,326 @@
+# Skill Ontology - Hierarchical taxonomy for semantic skill matching
+# Each group represents a skill domain with its children being specific skills
+
+vector_databases:
+  canonical: "Vector Database"
+  children:
+    - FAISS
+    - Pinecone
+    - Weaviate
+    - Qdrant
+    - Milvus
+    - ChromaDB
+    - pgvector
+    - LanceDB
+    - Vespa
+  related:
+    - vector search
+    - vector store
+    - approximate nearest neighbor
+    - ANN
+    - similarity search
+
+embedding_models:
+  canonical: "Embeddings"
+  children:
+    - sentence-transformers
+    - BGE
+    - E5
+    - OpenAI embeddings
+    - MiniLM
+    - all-MiniLM-L6-v2
+    - SBERT
+    - Instructor
+    - GTE
+    - Cohere Embed
+  related:
+    - text embeddings
+    - word2vec
+    - word embeddings
+    - dense representations
+    - embedding models
+    - vector representations
+
+search_retrieval:
+  canonical: "Information Retrieval"
+  children:
+    - BM25
+    - TF-IDF
+    - ElasticSearch
+    - OpenSearch
+    - Solr
+    - Lucene
+    - hybrid search
+    - dense retrieval
+    - sparse retrieval
+    - semantic search
+    - neural search
+  related:
+    - search systems
+    - search engine
+    - query understanding
+    - search relevance
+    - retrieval systems
+    - document retrieval
+
+ranking_systems:
+  canonical: "Ranking"
+  children:
+    - learning-to-rank
+    - LTR
+    - LambdaMART
+    - LambdaRank
+    - RankNet
+    - ListNet
+    - XGBoost Ranker
+    - LightGBM Ranker
+    - re-ranking
+    - cross-encoder
+  related:
+    - ranking systems
+    - search ranking
+    - relevance scoring
+    - NDCG
+    - MRR
+    - MAP
+
+recommendation_systems:
+  canonical: "Recommendation Systems"
+  children:
+    - collaborative filtering
+    - content-based filtering
+    - matrix factorization
+    - implicit feedback
+    - two-tower model
+    - candidate generation
+    - session-based recommendations
+  related:
+    - recommender systems
+    - personalization
+    - RecSys
+    - ALS
+    - item2vec
+
+nlp:
+  canonical: "NLP"
+  children:
+    - natural language processing
+    - text classification
+    - named entity recognition
+    - NER
+    - sentiment analysis
+    - text mining
+    - tokenization
+    - text generation
+    - question answering
+    - summarization
+    - machine translation
+  related:
+    - language models
+    - text processing
+    - computational linguistics
+    - spaCy
+    - NLTK
+    - CoreNLP
+
+large_language_models:
+  canonical: "LLMs"
+  children:
+    - GPT
+    - LLaMA
+    - Mistral
+    - Claude
+    - PaLM
+    - Gemini
+    - BLOOM
+    - Falcon
+    - Phi
+  related:
+    - large language models
+    - foundation models
+    - generative AI
+    - text generation
+    - language modeling
+
+llm_techniques:
+  canonical: "LLM Fine-tuning"
+  children:
+    - LoRA
+    - QLoRA
+    - PEFT
+    - adapter tuning
+    - prefix tuning
+    - instruction tuning
+    - RLHF
+    - DPO
+    - SFT
+  related:
+    - fine-tuning
+    - model adaptation
+    - parameter-efficient fine-tuning
+    - Fine-tuning LLMs
+
+rag:
+  canonical: "RAG"
+  children:
+    - retrieval augmented generation
+    - RAG pipeline
+    - document QA
+    - knowledge grounding
+    - context injection
+  related:
+    - LangChain
+    - LlamaIndex
+    - grounded generation
+    - knowledge retrieval
+
+deep_learning:
+  canonical: "Deep Learning"
+  children:
+    - neural networks
+    - CNN
+    - RNN
+    - LSTM
+    - GAN
+    - autoencoder
+    - attention mechanism
+    - transformer architecture
+  related:
+    - backpropagation
+    - gradient descent
+    - activation functions
+    - batch normalization
+    - dropout
+
+transformers:
+  canonical: "Transformers"
+  children:
+    - BERT
+    - RoBERTa
+    - DeBERTa
+    - T5
+    - GPT-2
+    - DistilBERT
+    - XLNet
+    - ALBERT
+    - Electra
+  related:
+    - attention
+    - self-attention
+    - multi-head attention
+    - Hugging Face
+    - Hugging Face Transformers
+
+ml_frameworks:
+  canonical: "ML Frameworks"
+  children:
+    - PyTorch
+    - TensorFlow
+    - JAX
+    - Keras
+    - scikit-learn
+    - XGBoost
+    - LightGBM
+    - CatBoost
+  related:
+    - model training
+    - deep learning frameworks
+    - machine learning libraries
+
+python:
+  canonical: "Python"
+  children:
+    - Python
+    - NumPy
+    - Pandas
+    - SciPy
+    - Polars
+    - FastAPI
+    - Flask
+    - Django
+    - asyncio
+    - Cython
+  related:
+    - programming
+    - scripting
+    - backend development
+
+mlops:
+  canonical: "MLOps"
+  children:
+    - MLflow
+    - Weights & Biases
+    - DVC
+    - Kubeflow
+    - Airflow
+    - model monitoring
+    - model serving
+    - TFX
+    - BentoML
+    - Triton
+    - TorchServe
+  related:
+    - ML pipelines
+    - model deployment
+    - ML infrastructure
+    - feature stores
+    - model registry
+    - experiment tracking
+    - production ML
+
+cloud_platforms:
+  canonical: "Cloud"
+  children:
+    - AWS
+    - GCP
+    - Azure
+    - SageMaker
+    - Vertex AI
+    - Azure ML
+    - Bedrock
+    - Lambda
+    - EC2
+    - S3
+  related:
+    - cloud computing
+    - serverless
+    - infrastructure
+
+data_engineering:
+  canonical: "Data Engineering"
+  children:
+    - Spark
+    - Kafka
+    - Airflow
+    - dbt
+    - Snowflake
+    - BigQuery
+    - Redshift
+    - Databricks
+    - Delta Lake
+    - Flink
+  related:
+    - data pipelines
+    - ETL
+    - stream processing
+    - batch processing
+    - data warehouse
+
+evaluation_metrics:
+  canonical: "ML Evaluation"
+  children:
+    - NDCG
+    - MRR
+    - MAP
+    - precision
+    - recall
+    - F1 score
+    - AUC
+    - ROC
+    - A/B testing
+    - offline evaluation
+  related:
+    - evaluation frameworks
+    - model metrics
+    - benchmark
+    - statistical testing

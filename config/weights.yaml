@@ -1,0 +1,65 @@
+# Scoring weights configuration
+# These weights control the relative importance of each scoring dimension
+
+# Final ensemble weights (must sum to 1.0)
+ensemble:
+  semantic_score: 0.25
+  skill_match_score: 0.20
+  career_fit_score: 0.20
+  behavioral_score: 0.15
+  experience_score: 0.10
+  honeypot_penalty: 0.10
+
+# Skill matching weights
+skills:
+  exact_match_weight: 1.0
+  fuzzy_match_weight: 0.7
+  semantic_match_weight: 0.5
+  proficiency_multiplier:
+    expert: 1.0
+    advanced: 0.8
+    intermediate: 0.5
+    beginner: 0.2
+  endorsement_bonus_cap: 0.15
+  duration_bonus_cap: 0.2
+
+# Career fitness weights
+career:
+  title_relevance: 0.30
+  industry_relevance: 0.20
+  company_type_relevance: 0.15
+  promotion_velocity: 0.10
+  career_stability: 0.10
+  company_size_fit: 0.10
+  recency_weight: 0.05
+
+# Behavioral signal weights
+behavioral:
+  recruiter_response_rate: 0.20
+  last_active_recency: 0.15
+  open_to_work: 0.12
+  interview_completion_rate: 0.10
+  profile_completeness: 0.08
+  github_activity: 0.08
+  notice_period: 0.07
+  search_appearance: 0.05
+  saved_by_recruiters: 0.05
+  offer_acceptance_rate: 0.05
+  verified_signals: 0.03
+  avg_response_time: 0.02
+
+# Experience scoring
+experience:
+  ideal_min_years: 5
+  ideal_max_years: 9
+  extended_max_years: 12
+  penalty_per_year_under: 0.08
+  penalty_per_year_over: 0.04
+
+# Honeypot detection thresholds
+honeypot:
+  max_skill_count_threshold: 15
+  impossible_duration_threshold: 0.5
+  experience_vs_career_mismatch_years: 3
+  keyword_stuffing_ratio_threshold: 0.8
+  zero_endorsement_expert_threshold: 3

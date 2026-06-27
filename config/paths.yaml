@@ -1,0 +1,24 @@
+# Path configuration for the AI Recruiter system
+data:
+  raw_dir: "data/raw"
+  candidates_file: "data/raw/candidates.jsonl"
+  job_description_file: "data/raw/job_description.docx"
+  signals_doc_file: "data/raw/redrob_signals_doc.docx"
+  schema_file: "data/raw/candidate_schema.json"
+
+artifacts:
+  dir: "artifacts"
+  embeddings_dir: "artifacts/embeddings"
+  index_dir: "artifacts/index"
+  models_dir: "artifacts/models"
+  features_dir: "artifacts/features"
+
+output:
+  submission_file: "submission.csv"
+  logs_dir: "logs"
+
+cache:
+  dir: "cache"
+  embeddings_cache: "cache/embeddings.npy"
+  features_cache: "cache/features.parquet"
+  jd_parsed_cache: "cache/jd_parsed.yaml"
