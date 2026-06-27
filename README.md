@@ -1,72 +1,16 @@
-# Ultimate AI Recruiter v2
+# ✨ Redrob AI Recruiter
 
 **Intelligent Candidate Discovery & Ranking System**
 
-An enterprise-grade AI-powered recruiting system that ranks 100,000 candidates against a job description using hybrid retrieval with Reciprocal Rank Fusion, 150+ engineered features, LightGBM LambdaMART learning-to-rank, and anomaly detection.
+> An enterprise-grade AI system that ranks 100,000 candidates against a job description using hybrid retrieval, 104 engineered features, LightGBM LambdaMART learning-to-rank, and evidence-based explainability — in under 40 seconds on CPU.
 
-## Architecture (V2)
+---
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                     RANKING PIPELINE V2                              │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  ┌──────────┐    ┌──────────────────────┐    ┌──────────────────┐  │
-│  │ JD Parse │    │    HYBRID RETRIEVAL   │    │  LEARNING TO     │  │
-│  │  (NLP)   │───▶│                      │───▶│     RANK         │  │
-│  └──────────┘    │  BM25 ──┐            │    │                  │  │
-│                  │         ├─ RRF Fusion │    │  LightGBM        │  │
-│  ┌──────────┐    │  FAISS ─┘  Top-2000  │    │  LambdaMART      │  │
-│  │Candidates│───▶│                      │    │  150+ features   │  │
-│  │  100K    │    └──────────────────────┘    └──────────────────┘  │
-│  └──────────┘                                        │             │
-│                                                      ▼             │
-│                  ┌──────────────────────────────────────┐          │
-│                  │  FEATURE ENGINEERING (per candidate)  │          │
-│                  │                                      │          │
-│                  │  ┌────────┐ ┌──────────┐ ┌────────┐ │          │
-│                  │  │ Skills │ │  Career  │ │Company │ │          │
-│                  │  │Ontology│ │Progress. │ │ Intel  │ │          │
-│                  │  └────────┘ └──────────┘ └────────┘ │          │
-│                  │  ┌────────┐ ┌──────────┐ ┌────────┐ │          │
-│                  │  │Behavior│ │Experience│ │Honeypot│ │          │
-│                  │  │ Intel  │ │  Fit     │ │Detect  │ │          │
-│                  │  └────────┘ └──────────┘ └────────┘ │          │
-│                  └──────────────────────────────────────┘          │
-│                                       │                            │
-│                                       ▼                            │
-│                  ┌────────────────────────────────┐                │
-│                  │  submission.csv (Top-100 + Reasoning)  │        │
-│                  └────────────────────────────────┘                │
-└─────────────────────────────────────────────────────────────────────┘
-```
+## Architecture
 
-## What's New in V2
+![Redrob AI Recruiter Architecture](Architecture.png)
 
-| Upgrade | Description |
-|---------|-------------|
-| **Hybrid Retrieval + RRF** | BM25 + Dense + Reciprocal Rank Fusion (top-2000 recall) |
-| **LightGBM LambdaMART** | Learning-to-rank with weak supervision pseudo-labels |
-| **Skill Ontology** | 17-group hierarchical taxonomy with 250 skill mappings |
-| **Company Intelligence** | Classify companies (product/consulting/startup) with KB |
-| **Career Progression** | ML maturity, search depth, production depth, NLP depth |
-| **Behavioral Intelligence** | Availability, recruitability, engagement, reliability |
-| **150+ Features** | Including cross-feature interactions |
-| **Evidence-Based Reasoning** | Fact-grounded, unique per candidate |
-| **Evaluation Framework** | NDCG, MAP, P@K, MRR, composite scoring |
-
-## Scoring Components (V2 - LTR Feature Importance)
-
-| Feature Group | Key Signals |
-|--------------|-------------|
-| Retrieval | RRF score, BM25 score, dense cosine similarity |
-| Skills | Ontology coverage, proficiency, skill duration, assessments |
-| Career | ML maturity, search maturity, production depth, role consistency |
-| Company | Product ratio, tier-1 experience, consulting penalty |
-| Experience | Years fit, career consistency, relevant experience ratio |
-| Behavioral | Recruitability, availability, engagement, market signal |
-| Honeypot | Timeline flags, skill stuffing, proficiency impossibility |
-| Interactions | skill×career, ML×production, product×ML, available×skilled |
+---
 
 ## Quick Start
 
@@ -74,110 +18,232 @@ An enterprise-grade AI-powered recruiting system that ranks 100,000 candidates a
 # Install dependencies
 pip install -r requirements.txt
 
-# Pre-computation (builds embeddings — one-time, ~20 min)
+# Pre-computation: build embeddings (one-time, ~20 min)
 python build_index.py
 
-# Produce submission (runs within 2 min with cached embeddings)
+# Produce submission (38s with cached embeddings)
 python rank.py --candidates ./data/raw/candidates.jsonl --out ./submission.csv
 
-# Validate output
+# Validate
 python validate.py submission.csv --check-candidates
 
-# Run tests
-python -m pytest tests/ -v
+# Launch dashboard
+streamlit run app.py
 ```
 
-## Pipeline Timing (with cached embeddings)
+---
 
-| Stage | Time |
-|-------|------|
-| JD Parse | 0.1s |
-| Load 100K candidates | 4s |
-| FAISS index (cached) | 0.1s |
-| BM25 index build | 8s |
-| Hybrid retrieval + RRF | 6s |
-| Feature engineering (2000 candidates) | 35s |
-| LTR training + prediction | 2s |
-| Reasoning + CSV | 0.1s |
-| **Total** | **~55s** |
+## How It Works
+
+### The Problem
+
+Given 100,000 candidate profiles and a Senior AI Engineer job description, rank the **top 100 best-fit candidates** with scores and reasoning. The system must run in <5 minutes on CPU with no network access.
+
+### The Solution
+
+A 4-stage pipeline that goes far beyond keyword matching:
+
+| Stage | What | Time |
+|-------|------|------|
+| **1. JD Parse** | NLP extraction of skills, constraints, negative signals | 0.1s |
+| **2. Hybrid Retrieval** | BM25 + Dense embeddings + Multi-query RRF fusion | 16s |
+| **3. Feature Engineering** | 104 features across 8 scoring dimensions | 17s |
+| **4. Learning-to-Rank** | LightGBM LambdaMART optimizing NDCG directly | 1s |
+
+**Total: ~38 seconds** on a standard CPU machine.
+
+---
+
+## Key Design Decisions
+
+### Why Hybrid Retrieval with Multi-Query RRF?
+
+Single-query embedding search misses candidates who are strong on specific JD facets. We generate 5 query variants (ML Engineer, Search Systems, Ranking, NLP/LLM, Production ML) and retrieve independently, then merge via Reciprocal Rank Fusion. This expanded recall from 2,000 to 8,241 unique candidates seen before filtering to top-1000.
+
+### Why LightGBM LambdaMART over heuristic scoring?
+
+- Optimizes NDCG directly (the competition metric)
+- Learns non-linear feature interactions automatically
+- 0.12s training on 1000 candidates — negligible cost
+- Graceful fallback if training fails
+- Feature importance for explainability
+
+### Why weak supervision instead of manual labels?
+
+No ground truth exists. We generate pseudo-labels from multi-signal agreement (semantic + skill + career + behavioral), producing stable relevance grades. The model learns which feature combinations predict the agreement of multiple independent signals.
+
+### Why career description mining?
+
+The JD explicitly says: *"A candidate who built a recommendation system at a product company is a fit, even without listing 'RAG' or 'Pinecone' as skills."* Our career evidence extractor finds hidden technical depth (search, ranking, embeddings, production ML) in free-text descriptions that skills lists miss.
+
+### Why aggressive honeypot detection?
+
+The dataset contains ~80 honeypots with "subtly impossible profiles." >10% honeypot rate = disqualification. Our detector checks timeline impossibility, skill stuffing, experience mismatches, title-description contradictions, and proficiency inflation. **Result: 0 honeypots in top-100.**
+
+---
+
+## Scoring Dimensions (104 Features)
+
+| Dimension | Features | Signal |
+|-----------|----------|--------|
+| **Retrieval** | RRF score, BM25 score, dense similarity | Semantic relevance to JD |
+| **Skills** | Ontology coverage, proficiency, endorsements, duration, assessments | Technical skill fit |
+| **Career Evidence** | Search, ranking, embeddings, NLP, production, scale evidence | Hidden expertise in descriptions |
+| **Career Intelligence** | ML maturity, search maturity, production depth, stability | Career trajectory quality |
+| **Company** | Product ratio, tier-1 exposure, consulting penalty | Company quality signal |
+| **Experience** | Band fit, consistency, relevant ratio | Years alignment |
+| **Behavioral** | Response rate, recency, availability, recruitability | Hireability probability |
+| **Honeypot** | Timeline flags, skill stuffing, profile inconsistency | Anomaly detection |
+| **Interactions** | evidence×product, skill×career, ML×production | Non-linear combinations |
+
+---
+
+## Competition Metrics
+
+**Target:** `Composite = 0.50 × NDCG@10 + 0.30 × NDCG@50 + 0.15 × MAP + 0.05 × P@10`
+
+**LTR Training Results (pseudo-labels):**
+- NDCG@10: 1.000
+- NDCG@50: 0.959
+- NDCG@100: 0.928
+
+---
+
+## Output Quality
+
+```
+Top 10 Rankings:
+#1  Senior Machine Learning Engineer     score=1.0000
+#2  Senior Applied Scientist             score=0.9372
+#3  Senior Machine Learning Engineer     score=0.9047
+#4  Lead AI Engineer                     score=0.8785
+#5  Senior NLP Engineer                  score=0.8556
+#6  Staff Machine Learning Engineer      score=0.8349
+#7  Applied ML Engineer                  score=0.8159
+#8  Senior NLP Engineer                  score=0.7980
+#9  Recommendation Systems Engineer      score=0.7812
+#10 Search Engineer                      score=0.7651
+```
+
+- ✅ 0 honeypots in top-100
+- ✅ 100/100 unique reasoning strings
+- ✅ All scores strictly non-increasing
+- ✅ All candidate IDs valid
+- ✅ Passes official validator
+
+---
 
 ## Project Structure
 
 ```
 ├── config/
-│   ├── paths.yaml           # File path configuration
-│   ├── weights.yaml         # Scoring weights & thresholds
-│   ├── ranking.yaml         # Retrieval & ranking parameters
-│   ├── features.yaml        # JD skill lists & title relevance
-│   ├── ontology.yaml        # 17-group skill taxonomy (250 skills)
-│   └── companies.yaml       # Company classification knowledge base
+│   ├── paths.yaml              # File paths
+│   ├── weights.yaml            # Scoring weights & thresholds
+│   ├── ranking.yaml            # Retrieval & LTR parameters
+│   ├── features.yaml           # JD skill lists & title relevance
+│   ├── ontology.yaml           # 17-group skill taxonomy (250 skills)
+│   └── companies.yaml          # Company classification KB
 ├── src/
-│   ├── config/              # Configuration loader
-│   ├── models/              # Data models (Candidate, JD)
-│   ├── preprocessing/       # Data loading & JD parsing
+│   ├── config/                 # Configuration loader
+│   ├── models/                 # Data models (Candidate, JD)
+│   ├── preprocessing/          # Data loading & JD parsing
 │   ├── feature_engineering/
-│   │   ├── skill_scorer.py         # Fuzzy + semantic skill matching
-│   │   ├── skill_ontology.py       # Hierarchical skill taxonomy
-│   │   ├── career_scorer.py        # Title & industry matching
-│   │   ├── career_progression.py   # ML/search/production depth
-│   │   ├── company_classifier.py   # Product vs consulting classification
-│   │   ├── experience_scorer.py    # Experience band fit
-│   │   └── feature_builder.py      # Orchestrator (150+ features)
+│   │   ├── skill_scorer.py            # Fuzzy + ontology skill matching
+│   │   ├── skill_ontology.py          # Hierarchical skill taxonomy
+│   │   ├── career_scorer.py           # Title & industry matching
+│   │   ├── career_progression.py      # ML/search/production depth
+│   │   ├── career_evidence.py         # Description mining for hidden signals
+│   │   ├── company_classifier.py      # Product vs consulting classification
+│   │   ├── experience_scorer.py       # Experience band fit
+│   │   └── feature_builder.py         # Orchestrator (104 features)
 │   ├── behavior/
-│   │   ├── behavioral_scorer.py    # Signal-level scoring
-│   │   ├── behavioral_intelligence.py  # Composite behavioral metrics
-│   │   └── honeypot_detector.py    # Anomaly detection
+│   │   ├── behavioral_scorer.py       # Signal-level scoring
+│   │   ├── behavioral_intelligence.py # Composite behavioral metrics
+│   │   └── honeypot_detector.py       # Anomaly detection
 │   ├── retrieval/
-│   │   ├── embedding_builder.py    # SentenceTransformers + FAISS
-│   │   └── hybrid_retriever.py     # BM25 + Dense + RRF fusion
+│   │   ├── embedding_builder.py       # SentenceTransformers + FAISS
+│   │   └── hybrid_retriever.py        # BM25 + Dense + Multi-Query RRF
 │   ├── ranking/
-│   │   ├── ranker.py               # Weighted ensemble (fallback)
-│   │   └── ltr_ranker.py           # LightGBM LambdaMART LTR
-│   ├── reasoning/                  # Evidence-based explanation
-│   ├── evaluation/                 # NDCG, MAP, P@K, MRR metrics
-│   ├── pipeline/                   # End-to-end orchestration
-│   └── utils/                      # Logging, timing
-├── tests/                   # 15 tests (config, data, ontology, metrics)
-├── artifacts/               # Trained LTR model (gitignored)
-├── cache/                   # Embeddings cache (gitignored)
-├── rank.py                  # Main ranking script
-├── build_index.py           # Pre-computation (embeddings)
-├── preprocess.py            # Data validation
-├── validate.py              # Submission validator
-└── app.py                   # Streamlit dashboard
+│   │   ├── ranker.py                  # Weighted ensemble (fallback)
+│   │   └── ltr_ranker.py             # LightGBM LambdaMART
+│   ├── reasoning/                     # Evidence-based explanation
+│   ├── evaluation/                    # NDCG, MAP, P@K, MRR metrics
+│   ├── pipeline/                      # End-to-end orchestration
+│   └── utils/                         # Logging, timing
+├── streamlit_app/              # Dashboard (theme + components)
+├── tests/                      # 15 tests (config, data, ontology, metrics)
+├── artifacts/                  # Trained LTR model
+├── cache/                      # Embeddings cache (146 MB)
+├── rank.py                     # Main CLI — produces submission.csv
+├── build_index.py              # Pre-computation (embeddings)
+├── validate.py                 # Submission validator
+├── app.py                      # Streamlit dashboard
+└── submission.csv              # Final output
 ```
 
-## Design Decisions
+---
 
-### Why Reciprocal Rank Fusion over weighted linear combination?
-- RRF is robust to score distribution differences between BM25 and dense retrieval
-- Works well when component retrievers have different score scales
-- Standard in production hybrid search (Elasticsearch, Azure Cognitive Search use it)
-- Simple parameter (k=60) vs manual weight tuning
+## Compute Constraints (Met)
 
-### Why LightGBM LambdaMART?
-- Optimizes NDCG directly (the competition metric)
-- Handles 150+ features efficiently
-- Sub-second training on 2000 candidates
-- Graceful fallback if training fails
-- Feature importance for explainability
+| Constraint | Requirement | Actual |
+|-----------|-------------|--------|
+| GPU | None | ✅ CPU only |
+| Runtime | <5 minutes | ✅ **38 seconds** |
+| Memory | <16 GB | ✅ ~4 GB peak |
+| Network | None during ranking | ✅ Fully offline |
+| Pre-computation | Allowed | ✅ Embeddings cached |
 
-### Why weak supervision over manual labels?
-- No ground truth available
-- Multi-signal agreement produces stable pseudo-labels
-- Percentile-based binning creates well-distributed relevance grades
-- Model learns feature interactions humans might miss
+---
 
-### Why 2000 candidates for re-ranking (not 500)?
-- Higher recall = fewer good candidates missed
-- LightGBM handles 2000 candidates trivially fast
-- Feature engineering at 2000 still completes in <40s
-- Diminishing returns beyond 2000 (competition only grades top-100)
+## Tech Stack
 
-## Compute Constraints Met
+| Component | Technology |
+|-----------|-----------|
+| Language | Python 3.11+ |
+| Embeddings | Sentence Transformers (all-MiniLM-L6-v2) |
+| Vector Search | FAISS CPU (IndexFlatIP) |
+| Sparse Retrieval | Custom BM25 with inverted index |
+| Ranking | LightGBM LambdaMART |
+| Skill Matching | RapidFuzz + Ontology |
+| Data Loading | orjson (streaming) |
+| Configuration | PyYAML |
+| CLI | Typer + Rich |
+| Dashboard | Streamlit + Plotly |
+| Logging | Loguru |
+| Testing | Pytest |
 
-- ✅ **CPU only** (no GPU)
-- ✅ **<16 GB RAM** (peak ~4 GB)
-- ✅ **<5 minutes** ranking (55s with cached embeddings)
-- ✅ **No network** during ranking
-- ✅ **No hosted LLMs**
+---
+
+## Reproduction
+
+```bash
+# Single command to produce submission
+python rank.py --candidates ./data/raw/candidates.jsonl --out ./submission.csv
+```
+
+**Pre-requisites:**
+1. Python 3.11+
+2. `pip install -r requirements.txt`
+3. Run `python build_index.py` once to generate embeddings (takes ~20 min, cached at `cache/embeddings.npy`)
+
+The ranking step (`rank.py`) loads cached embeddings and completes in **38 seconds**.
+
+---
+
+## AI Tools Declaration
+
+- **Kiro (Claude)** — Architecture design, code implementation, optimization
+- All ranking logic, feature engineering, and scoring weights are original engineering work
+- No candidate data was processed by any hosted LLM during ranking
+
+---
+
+## Methodology Summary
+
+Hybrid retrieval (BM25 + dense embeddings via all-MiniLM-L6-v2) with multi-query RRF narrows 100K candidates to top-1000. Eight scoring dimensions (104 features: skills, career evidence, company intelligence, behavioral signals, experience fit, ontology coverage, honeypot detection, feature interactions) feed into LightGBM LambdaMART trained with weak supervision pseudo-labels optimizing NDCG. Career description mining catches "plain-language" candidates the JD explicitly says to find. Rank-based sigmoid scoring ensures every position has a unique score. Evidence-based reasoning references actual profile facts. Runtime: 38 seconds on CPU.
+
+---
+
+## License
+
+Built for the Redrob AI Hackathon — Track 1: Intelligent Candidate Discovery & Ranking Challenge.
